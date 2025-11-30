@@ -87,15 +87,15 @@ builder.Services.AddCors(options =>
 
 // Bind Twilio settings from appsettings.json
 
-builder.Services.Configure<TwilioSettings>(options =>
-{
-    options.AccountSid = Environment.GetEnvironmentVariable("TWILIO_SID");
-    options.AuthToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
-    options.FromWhatsApp = Environment.GetEnvironmentVariable("TWILIO_FROM");
-});
+// builder.Services.Configure<TwilioSettings>(options =>
+// {
+//     options.AccountSid = Environment.GetEnvironmentVariable("TWILIO_SID");
+//     options.AuthToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+//     options.FromWhatsApp = Environment.GetEnvironmentVariable("TWILIO_FROM");
+// });
 
-// Optional: register WhatsAppService as a singleton or scoped
-builder.Services.AddSingleton<WhatsAppService>();
+// // Optional: register WhatsAppService as a singleton or scoped
+// builder.Services.AddSingleton<WhatsAppService>();
 
 
 
