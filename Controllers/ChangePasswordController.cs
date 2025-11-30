@@ -30,9 +30,9 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
         _logger.LogInformation("OTP for {Phone}: {OTP}", phone, otp);
 
         // return Ok(new { message = "OTP sent via WhatsApp" + otp });
-        user.OtpCode = otp;
-        user.OtpExpiry = DateTime.UtcNow.AddMinutes(5);  // Valid 5 minutes
-        await _db.SaveChangesAsync();
+        // user.OtpCode = otp;
+        // user.OtpExpiry = DateTime.UtcNow.AddMinutes(5);  // Valid 5 minutes
+        //  await _db.SaveChangesAsync();
 
         // var wa = new WhatsAppService();
         //  _whatsAppService.SendMessage(phone, $"Your OTP code is: {otp}");
