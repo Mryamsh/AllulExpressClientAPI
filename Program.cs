@@ -87,10 +87,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("Twilio"));
 
-var twilio = builder.Configuration.GetSection("Twilio");
-TwilioClient.Init(twilio["AccountSid"], twilio["AuthToken"]);
+// WhatsApp service
+builder.Services.AddSingleton<WhatsAppService>();
 
-Console.WriteLine("phone " + twilio["AccountSid"]);
 
 
 builder.Services.AddScoped<TokenService>();
