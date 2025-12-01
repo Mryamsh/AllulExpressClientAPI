@@ -16,8 +16,9 @@ public class WhatsAppService
 
     public void SendMessage(string to, string message)
     {
-        Console.WriteLine(to);
-        Console.WriteLine(_settings.WhatsAppNumber);
+        Console.WriteLine("Twilio SID = " + to);
+        Console.WriteLine("Twilio SID = " + _settings.WhatsAppNumber);
+
 
         var msg = MessageResource.Create(
             from: new PhoneNumber(_settings.WhatsAppNumber),
