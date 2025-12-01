@@ -14,11 +14,12 @@ public class WhatsAppService
 
     public void SendOtp(string phone)
     {
+        var formatted = $"whatsapp:+964{phone.Substring(1)}";
         TwilioClient.Init(_twilio.AccountSid, _twilio.AuthToken);
 
         MessageResource.Create(
             from: new PhoneNumber("whatsapp:+14155238886"),
-            to: new PhoneNumber($"whatsapp:{phone}"),
+            to: new PhoneNumber(formatted),
             body: "Your OTP is 1234"
         );
     }
