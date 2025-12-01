@@ -72,7 +72,11 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
         if (user == null)
             return NotFound();
 
-        user.Password = req.NewPassword; // You should hash it using BCrypt
+        if (!string.IsNullOrEmpty(user.Password))
+        {
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        }
+        // user.Password = req.NewPassword; // You should hash it using BCrypt
         user.OtpCode = null;
         user.OtpExpiry = null;
 
