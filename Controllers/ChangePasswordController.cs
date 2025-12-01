@@ -37,7 +37,7 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
         await _db.SaveChangesAsync();
 
         // var wa = new WhatsAppService();
-        _whatsAppService.SendOtp(phone);
+        _whatsAppService.SendOtp(phone, otp);
 
         return Ok(new { message = "OTP sent via WhatsApp" });
     }
