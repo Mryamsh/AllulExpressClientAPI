@@ -16,7 +16,7 @@ public class WhatsAppService
     public void SendMessage(string to, string message)
     {
         var msg = MessageResource.Create(
-            from: new PhoneNumber(_settings.FromWhatsApp),
+            from: new PhoneNumber(_settings.WhatsAppNumber),
             to: new PhoneNumber(to),
             body: message
         );
