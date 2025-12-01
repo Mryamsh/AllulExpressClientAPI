@@ -20,16 +20,18 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
     [HttpPost("request-otp")]
     public async Task<IActionResult> RequestOtp([FromBody] string phone)
     {
-        _logger.LogInformation("here");
+        Console.WriteLine("phone " + phone);
+
 
         var user = await _db.Clients.FirstOrDefaultAsync(c => c.Phonenum1 == phone);
         if (user == null)
             return NotFound(new { message = "Phone not registered" });
 
         string otp = OtpService.GenerateOtp();
-        _logger.LogInformation("OTP for {Phone}: {OTP}", phone, otp);
+        Console.WriteLine("otp " + otp);
 
-        return Ok(new { message = "OTP sent via WhatsApp" + otp });
+
+        //  return Ok(new { message = "OTP sent via WhatsApp" + otp });
         user.OtpCode = otp;
         user.OtpExpiry = DateTime.UtcNow.AddMinutes(5);  // Valid 5 minutes
         await _db.SaveChangesAsync();
