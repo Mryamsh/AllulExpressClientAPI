@@ -89,7 +89,7 @@ builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("Twi
 
 var twilio = builder.Configuration.GetSection("Twilio");
 TwilioClient.Init(twilio["AccountSid"], twilio["AuthToken"]);
-Console.WriteLine("Twilio SID = " + twilio["AccountSid"]);
+
 
 
 builder.Services.AddScoped<TokenService>();

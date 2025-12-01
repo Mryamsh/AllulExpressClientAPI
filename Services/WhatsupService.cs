@@ -13,12 +13,18 @@ public class WhatsAppService
         TwilioClient.Init(_settings.AccountSid, _settings.AuthToken);
     }
 
+
     public void SendMessage(string to, string message)
     {
+        Console.WriteLine(to);
+        Console.WriteLine(_settings.WhatsAppNumber);
+
         var msg = MessageResource.Create(
             from: new PhoneNumber(_settings.WhatsAppNumber),
-            to: new PhoneNumber(to),
+            to: new PhoneNumber($"whatsapp:{to}"),
             body: message
         );
+
+
     }
 }
