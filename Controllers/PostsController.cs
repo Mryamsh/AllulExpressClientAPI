@@ -50,6 +50,54 @@ public class PostsController : ControllerBase
 
     //     return Ok(post);
     // }
+    [HttpGet("{postId}/client/{clientId}")]
+    public async Task<IActionResult> GetPostById(int postId, int clientId)
+    {
+        // Fetch the post including the driver info
+        var post = await _db.Posts
+            .Include(p => p.driver) // Make sure you have a navigation property "Driver" in Post model
+            .FirstOrDefaultAsync(p => p.Id == postId && p.ClientId == clientId);
 
+        if (post == null)
+        {
+            return NotFound(new { message = "Post not found or not associated with this client." });
+        }
+
+        // Optional: return custom object instead of full EF entities
+        var result = new
+        {
+            PostId = post.Id,
+            post.Businessname,
+            post.City,
+            post.Phonenum1,
+            post.Phonenum2,
+            post.Price,
+            post.Shipmentfee,
+            post.Postnum,
+            post.ChangeOrReturn,
+            post.Numberofpieces,
+            post.Exactaddress,
+            post.Poststatus,
+            post.Note,
+            post.Savedate,
+
+
+            Driver = post.driver != null ? new
+            {
+                post.driver.Id,
+                post.driver.Name,
+                post.driver.Phonenum1,
+                post.driver.Phonenum2,
+                post.driver.Email,
+                post.driver.Note,
+
+
+
+                post.driver.Vehicledetail
+            } : null
+        };
+
+        return Ok(result);
+    }
 
 }
