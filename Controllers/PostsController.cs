@@ -1,6 +1,7 @@
 
 using AllulExpressClientApi.Data;
 using AllulExpressClientApi.Models;
+using AllulExpressClientApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,13 @@ using Microsoft.EntityFrameworkCore;
 public class PostsController : ControllerBase
 {
     private readonly AppDbContext _db;
+    private readonly QrCodeService _qrService;
 
-    public PostsController(AppDbContext db)
+
+    public PostsController(AppDbContext db, QrCodeService qrService)
     {
         _db = db;
+        _qrService = qrService;
     }
     [Authorize]
     [HttpGet("{clientId}/posts")]
@@ -52,18 +56,40 @@ public class PostsController : ControllerBase
     // }
 
     [HttpGet("by-qrcode")]
-    public async Task<IActionResult> GetPostByQr([FromQuery] string qr, [FromQuery] int clientId)
+    public IActionResult GetPostByQr(string qr, int clientId)
     {
-        var post = await _db.Posts.FirstOrDefaultAsync(p => p.Qrcode == qr);
+        try
+        {
+            string decrypted = _qrService.Decrypt(qr);
 
-        if (post == null)
-            return NotFound("Post not found");
+            Console.WriteLine("QR RAW: " + qr);
+            Console.WriteLine("QR DECRYPTED: " + decrypted);
 
-        if (post.ClientId != clientId)
-            return BadRequest("This post does not belong to this client");
+            var parts = decrypted.Split('|');
+            if (parts.Length != 3)
+                return BadRequest("Invalid QR Code");
 
-        return Ok(post);
+            int postId = int.Parse(parts[2]);
+            int qrClientId = int.Parse(parts[0]); // from QR
+
+            Console.WriteLine($"QR ClientId = {qrClientId}, Request ClientId = {clientId}");
+
+            if (qrClientId != clientId)
+                return BadRequest("Client mismatch");
+
+            var post = _db.Posts.FirstOrDefault(i => i.Id == postId);
+
+            if (post == null)
+                return NotFound("Post not found");
+
+            return Ok(post);
+        }
+        catch
+        {
+            return BadRequest("QR decode failed");
+        }
     }
+
 
     [HttpGet("{postId}/client/{clientId}")]
     public async Task<IActionResult> GetPostById(int postId, int clientId)
