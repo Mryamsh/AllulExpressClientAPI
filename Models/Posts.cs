@@ -28,6 +28,7 @@ namespace AllulExpressClientApi.Models
         // Navigation property
         [JsonIgnore]
         public Drivers? driver { get; set; }
+        public string? Qrcode { get; internal set; }
 
 
 

@@ -50,6 +50,21 @@ public class PostsController : ControllerBase
 
     //     return Ok(post);
     // }
+
+    [HttpGet("by-qrcode")]
+    public async Task<IActionResult> GetPostByQr([FromQuery] string qr, [FromQuery] int clientId)
+    {
+        var post = await _db.Posts.FirstOrDefaultAsync(p => p.Qrcode == qr);
+
+        if (post == null)
+            return NotFound("Post not found");
+
+        if (post.ClientId != clientId)
+            return BadRequest("This post does not belong to this client");
+
+        return Ok(post);
+    }
+
     [HttpGet("{postId}/client/{clientId}")]
     public async Task<IActionResult> GetPostById(int postId, int clientId)
     {
