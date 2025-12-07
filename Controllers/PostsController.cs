@@ -54,8 +54,9 @@ public class PostsController : ControllerBase
     [HttpGet("by-qrcode")]
     public async Task<IActionResult> GetPostByQr([FromQuery] string qr, [FromQuery] int clientId)
     {
+        Console.WriteLine(qr);
         var post = await _db.Posts.FirstOrDefaultAsync(p => p.Qrcode == qr);
-
+        Console.WriteLine(post);
         if (post == null)
             return NotFound("Post not found");
 
