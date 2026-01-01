@@ -9,13 +9,15 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
 {
     private readonly AppDbContext _db;
     private readonly WhatsAppService _whatsAppService;
+    private readonly SmsService _smsService;
     private readonly ILogger<AuthController> _logger;
 
-    public AuthController(AppDbContext db, WhatsAppService whatsAppService, ILogger<AuthController> logger)
+    public AuthController(AppDbContext db, WhatsAppService whatsAppService, ILogger<AuthController> logger, SmsService smsService)
     {
         _db = db;
         _whatsAppService = whatsAppService;
         _logger = logger;
+        _smsService = smsService;
     }
     [HttpPost("request-otp")]
     public async Task<IActionResult> RequestOtp([FromBody] string phone)
@@ -37,7 +39,11 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
         await _db.SaveChangesAsync();
 
         // var wa = new WhatsAppService();
-        _whatsAppService.SendOtp(phone, otp);
+        //   _whatsAppService.SendOtp(phone, otp);
+        await _smsService.SendAsync(
+         phone,
+         $"Your reset code is {otp}"
+     );
 
         return Ok(new { message = "OTP sent via WhatsApp" });
     }

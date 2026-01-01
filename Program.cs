@@ -89,6 +89,8 @@ builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("Twi
 
 // WhatsApp service
 builder.Services.AddSingleton<WhatsAppService>();
+builder.Services.AddScoped<SmsService>();
+
 
 
 
