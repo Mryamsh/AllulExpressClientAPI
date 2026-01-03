@@ -39,11 +39,11 @@ public class AuthController : Microsoft.AspNetCore.Mvc.ControllerBase
         await _db.SaveChangesAsync();
 
         // var wa = new WhatsAppService();
-        //   _whatsAppService.SendOtp(phone, otp);
-        await _smsService.SendAsync(
-         phone,
-         $"Your reset code is {otp}"
-     );
+        _whatsAppService.SendOtp(phone, otp);
+        //     await _smsService.SendAsync(
+        //      phone,
+        //      $"Your reset code is {otp}"
+        //  );
 
         return Ok(new { message = "OTP sent via WhatsApp" });
     }
