@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AllulExpressClientAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fe348d4934f411cbec136cad65313a79a728330")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c173e8f5181e40e14a8c8b2a2fed18526c0ac89")]
 [assembly: System.Reflection.AssemblyProductAttribute("AllulExpressClientAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AllulExpressClientAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
